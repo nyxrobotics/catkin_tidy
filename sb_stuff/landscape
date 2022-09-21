@@ -1,7 +1,0 @@
-#!/bin/sh
-
-xrandr --output eDP1 --rotate normal
-xinput set-float-prop "Microsoft Surface Keyboard Touchpad" "Coordinate Transformation Matrix" 0 0 0 0 0 0 0 0 0
-xinput set-float-prop "ipts 045E:0021 Pen" "Coordinate Transformation Matrix" 0 0 0 0 0 0 0 0 0
-xinput set-float-prop "ipts 045E:0021 Touchscreen" "Coordinate Transformation Matrix" 0 0 0 0 0 0 0 0 0
-

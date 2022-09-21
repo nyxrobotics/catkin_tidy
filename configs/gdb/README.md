@@ -1,3 +1,0 @@
-- Put printers.py in ~/.gdb
-- Put gdbinit as .gdbinit in your home folder
-- Edit `sys.path.insert(0, '/home/fez/.gdb')` for your user

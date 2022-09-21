@@ -1,8 +1,0 @@
-### Build with warnings, continue on error, verbose, print summary
-bwarn: build -c -v --summary --cmake-args "-DCMAKE_CXX_FLAGS=-Wall -Wextra -Werror=uninitialized -Werror=return-type" --
-### Build as debug
-bdebug: build --cmake-args -DCMAKE_BUILD_TYPE=Debug
-### Run tests quietly
-run_tests_quiet: build --summary -c --catkin-make-args run_tests -- 
-
-build_install: build --cmake-args "-DCMAKE_BUILD_TYPE=Release -DPUBLICBUILD=1" --
