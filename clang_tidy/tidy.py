@@ -116,7 +116,7 @@ def main(opts):
     return 0
 
 description = dict(
-        verb='tidy',
+        verb='clang_tidy',
         description='Runs clang-tidy on a file. Make sure you have enabled generation of compile_commands.json.',
         main=main,
         prepare_arguments=prepare_arguments,

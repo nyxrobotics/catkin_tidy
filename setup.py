@@ -6,7 +6,7 @@ setup(
     packages=find_packages(),
     entry_points={
         'catkin_tools.commands.catkin.verbs': [
-            'tidy = catkin_tidy.tidy:description',
+            'clang_tidy = clang_tidy.tidy:description',
             ],
         },
     )
