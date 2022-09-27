@@ -8,6 +8,7 @@ from catkin_tools.metadata import find_enclosing_workspace
 from catkin_tools.context import Context
 from catkin_pkg.packages import find_packages
 from subprocess import Popen
+from subprocess import PIPE
 
 def runClangTidy(clang_binary, pkg_root, package, filenames, cfg, compile_db, fix = False, export_file=None, dry_run = False):
     cmd = [clang_binary]
@@ -36,8 +37,9 @@ def runClangTidy(clang_binary, pkg_root, package, filenames, cfg, compile_db, fi
 
 def prepare_arguments(parser):
     add_context_args(parser)
+    default_clang_tidy = "clang-tidy-" + getInstalledClangVersion()
     clang_binary = parser.add_argument
-    clang_binary('-c', '--clang-tidy', nargs="?", default="clang-tidy-13", help="Name of clang-tidy binary, e.g. 'clang-tidy-9'")
+    clang_binary('-c', '--clang-tidy', nargs="?", default=default_clang_tidy , help="Name of clang-tidy binary, e.g. 'clang-tidy-9'")
     fix = parser.add_argument
     fix('-f', '--fix', action='store_true', default=True, help="Apply fixes")
     export = parser.add_argument
@@ -47,6 +49,18 @@ def prepare_arguments(parser):
     src = parser.add_argument
     src('src_file', nargs='*', help="Source files to run for")
     return parser
+
+def getInstalledClangVersion():
+    # List versions without minor numbers in order of newest to oldest
+    cmd = ['ls -vr /usr/lib/clang --ignore="*.*"']
+    print("Command:{}".format(cmd))
+    s = Popen(cmd, shell=True, stdout=PIPE, stderr=PIPE)
+    s.wait()
+    std_out, std_err = s.communicate()
+    version_list = std_out.decode('utf-8').rstrip().split('\n')
+    if len(version_list)==0:
+        print("ERROR:No clang compiler found")
+    return version_list[0]
 
 def findSrcFiles(path):
     p = pathlib.Path(path)
@@ -71,7 +85,6 @@ def findCodeFiles(path):
     for files in types:
         files_grabbed.extend(p.glob(files))
     return map(lambda a : a.as_posix(), files_grabbed)
-
 
 def main(opts):
     opts = sys.argv[1:] if opts is None else opts
