@@ -50,10 +50,10 @@ def prepare_arguments(parser):
     src('src_file', nargs='*', help="Source files to run for")
     return parser
 
+# List versions without minor numbers in order of newest to oldest
 def getInstalledClangVersion():
-    # List versions without minor numbers in order of newest to oldest
     cmd = ['ls -vr /usr/lib/clang --ignore="*.*"']
-    print("Command:{}".format(cmd))
+    # print("Command:{}".format(cmd))
     s = Popen(cmd, shell=True, stdout=PIPE, stderr=PIPE)
     s.wait()
     std_out, std_err = s.communicate()
