@@ -34,3 +34,6 @@ pip install .
 ```
 pip uninstall catkin-tidy -y
 ```
+
+### Reference
+- [ipa-fez/tipsntricks](https://github.com/ipa-fez/tipsntricks/blob/master/clang/catkin_tidy/catkin_tidy/tidy.py)

@@ -8,7 +8,7 @@ setup(
         'catkin_tools.commands.catkin.verbs': [
             'clang_tidy = clang_tidy.tidy:description',
             'clang_format = clang_format.format:description',
-            # 'clang_build = clang_build.build:description',
+            'clang_build = clang_build.build:description',
             ],
         },
     )
