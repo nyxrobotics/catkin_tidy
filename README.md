@@ -21,6 +21,7 @@ catkin clang_tidy <package_name>
 ### install
 
 ```
+sudo apt isntall clang-format-13 clang-tidy-13
 mkdir -p ~/lib
 cd ~/lib
 git clone https://github.com/nyxrobotics/catkin_tidy.git
