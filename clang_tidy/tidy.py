@@ -13,28 +13,18 @@ from subprocess import PIPE
 def runClangTidy(clang_binary, pkg_root, package, headers, sources, cfg, compile_db, fix = False, export_file=None, dry_run = False):
     cmd = [clang_binary]
     cmd += ['-p={}'.format(compile_db)]
-    # cmd += ['-header-filter={}/include/.*'.format(pkg_root)]
-    # cmd += ['-header-filter={}/include'.format(pkg_root)]
-    # cmd += ['-header-filter="{}"'.format(headers)]
-    # cmd += ['-header-filter=include/.*']
-    cmd += ['-header-filter={}'.format(pkg_root)]
-    # cmd += ['-header-filter=.*']
-    # cmd += ['-config={}'.format(cfg)]
+    cmd += ['-header-filter={}/.*'.format(pkg_root)]
     if fix:
-        cmd += ['-checks=-*,google-readability-casting']
         cmd += ['-enable-check-profile']
         cmd += ['-extra-arg=-std=c++11']
         cmd += ['-fix']
         cmd += ['-fix-errors']
         cmd += ['-format-style=file']
-        # cmd += ['-quiet']
-        # cmd += ['-use-color']
         cmd += ['-warnings-as-errors=*']
-        # cmd += ['-dump-config']
     if export_file:
         cmd += ['-export-fixes={}'.format(export_file)]
     cmd += sources
-    # cmd += headers
+    cmd += headers
     if dry_run:
         print(" ".join(cmd))
     else:
@@ -49,7 +39,7 @@ def prepare_arguments(parser):
     clang_binary = parser.add_argument
     clang_binary('-c', '--clang-tidy', nargs="?", default=default_clang_tidy , help="Name of clang-tidy binary, e.g. 'clang-tidy-9'")
     fix = parser.add_argument
-    fix('-f', '--fix', action='store_true', default=True, help="Apply fixes")
+    fix('-f', '--fix', action='store_true', default=False, help="Apply fixes")
     export = parser.add_argument
     export('-e', '--export', nargs=1, help="Export fixes to file (unsets -f)")
     pkg = parser.add_argument
@@ -96,7 +86,7 @@ def findCodeFiles(path):
 
 def main(opts):
     opts = sys.argv[1:] if opts is None else opts
-    #print(opts)
+    # print(opts)
 
     workspace = os.getcwd() if opts.workspace is None else opts.workspace
     workspace = find_enclosing_workspace(workspace)
