@@ -19,9 +19,21 @@ catkin clang_tidy <package_name>
 ```
 
 ### install
-
+- install clang
+  - Ubuntu 18.04
+  ```
+  sudo add-apt-repository 'deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic main'
+  wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
+  sudo apt install -y clang-format-13 clang-tidy-13
+  ```
+  - Ubuntu 20.04
+  ```
+  sudo add-apt-repository 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal-13 main'
+  wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
+  sudo apt install -y clang-format-13 clang-tidy-13
+  ```
+- setup catkin_tidy
 ```
-sudo apt isntall clang-format-13 clang-tidy-13
 mkdir -p ~/lib
 cd ~/lib
 git clone https://github.com/nyxrobotics/catkin_tidy.git
