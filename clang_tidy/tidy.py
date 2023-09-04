@@ -23,12 +23,12 @@ def runClangTidy(clang_binary, pkg_root, package, headers, sources, cfg, compile
         cmd += ['-warnings-as-errors=*']
     if export_file:
         cmd += ['-export-fixes={}'.format(export_file)]
-    cmd += sources
-    cmd += headers
+    cmd += list(sources)
+    cmd += list(headers)
     if dry_run:
         print(" ".join(cmd))
     else:
-        print("Command '{}'".format(cmd))
+        print("Command '{}'".format(" ".join(cmd)))
         print("Package path '{}'".format(pkg_root))
         s = Popen(" ".join(cmd), cwd=pkg_root, shell=True)
         s.wait()

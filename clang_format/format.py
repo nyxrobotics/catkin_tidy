@@ -23,7 +23,7 @@ def runClangFormat(clang_binary, pkg_root, package, filenames, cfg, compile_db, 
     if dry_run:
         print(" ".join(cmd))
     else:
-        print("Command '{}'".format(cmd))
+        print("Command '{}'".format(" ".join(cmd)))
         print("Package path '{}'".format(pkg_root))
         s = Popen(" ".join(cmd), cwd=pkg_root, shell=True)
         s.wait()
