@@ -22,15 +22,15 @@ def runClangBuild(pkg_name, clang_version):
     cmd += ['-DCMAKE_EXPORT_COMPILE_COMMANDS=ON']
     cmd += ['-DCMAKE_C_COMPILER=/usr/bin/clang-{}'.format(clang_version)]
     cmd += ['-DCMAKE_CXX_COMPILER=/usr/bin/clang++-{}'.format(clang_version)]
-    print("Command '{}'".format(cmd))
-    s = Popen(cmd, shell=True)
+    print("Command '{}'".format(" ".join(cmd)))
+    s = Popen(" ".join(cmd), shell=True)
     s.wait()
 
 def getInstalledClangVersion():
     # List versions without minor numbers in order of newest to oldest
     cmd = ['ls -vr /usr/lib/clang --ignore="*.*"']
-    print("Command:{}".format(cmd))
-    s = Popen(cmd, shell=True, stdout=PIPE, stderr=PIPE)
+    print("Command:{}".format(" ".join(cmd)))
+    s = Popen(" ".join(cmd), shell=True, stdout=PIPE, stderr=PIPE)
     s.wait()
     std_out, std_err = s.communicate()
     version_list = std_out.decode('utf-8').rstrip().split('\n')

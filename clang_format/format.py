@@ -25,7 +25,7 @@ def runClangFormat(clang_binary, pkg_root, package, filenames, cfg, compile_db, 
     else:
         print("Command '{}'".format(cmd))
         print("Package path '{}'".format(pkg_root))
-        s = Popen(cmd, cwd=pkg_root)
+        s = Popen(" ".join(cmd), cwd=pkg_root, shell=True)
         s.wait()
 
 def prepare_arguments(parser):
@@ -47,7 +47,7 @@ def prepare_arguments(parser):
 def getInstalledClangVersion():
     cmd = ['ls -vr /usr/lib/clang --ignore="*.*"']
     # print("Command:{}".format(cmd))
-    s = Popen(cmd, shell=True, stdout=PIPE, stderr=PIPE)
+    s = Popen(" ".join(cmd), shell=True, stdout=PIPE, stderr=PIPE)
     s.wait()
     std_out, std_err = s.communicate()
     version_list = std_out.decode('utf-8').rstrip().split('\n')
