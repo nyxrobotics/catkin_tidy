@@ -18,7 +18,10 @@ def prepare_arguments(parser):
 
 def runClangBuild(pkg_name, clang_version):
     # 'catkin build <packagename> -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_C_COMPILER=/usr/bin/clang-13 -DCMAKE_CXX_COMPILER=/usr/bin/clang++-13'
-    cmd = ['catkin build {}'.format(pkg_name)]
+    if pkg_name == "all":
+        cmd = ['catkin build']
+    else:
+        cmd = ['catkin build {}'.format(pkg_name)]
     cmd += ['-DCMAKE_EXPORT_COMPILE_COMMANDS=ON']
     cmd += ['-DCMAKE_C_COMPILER=/usr/bin/clang-{}'.format(clang_version)]
     cmd += ['-DCMAKE_CXX_COMPILER=/usr/bin/clang++-{}'.format(clang_version)]
@@ -48,20 +51,22 @@ def main(opts):
     if not workspace:
         print("No workspace found")
         sys.exit(1)
+    if opts.package == "all":
+        runClangBuild(pkg_name="all",clang_version=getInstalledClangVersion())
+    else:
+        ctx = Context.load(workspace, opts.profile, opts, load_env=False)
+        packages = find_packages(ctx.source_space_abs)
+        pkg_path = [pkg_path for pkg_path, p in packages.items() if p.name == opts.package]
+        pkg_path = None if not pkg_path else pkg_path[0]
+        if not pkg_path:
+            print("Package '{}' not found!".format(opts.package))
+            sys.exit(2)
 
-    ctx = Context.load(workspace, opts.profile, opts, load_env=False)
-    packages = find_packages(ctx.source_space_abs)
-    pkg_path = [pkg_path for pkg_path, p in packages.items() if p.name == opts.package]
-    pkg_path = None if not pkg_path else pkg_path[0]
-    if not pkg_path:
-        print("Package '{}' not found!".format(opts.package))
-        sys.exit(2)
-
-    pkg_name = packages[pkg_path].name
-    build_space = ctx.build_space_abs + os.path.sep + pkg_name
-    pkg_root = ctx.source_space_abs + os.path.sep + pkg_path
-    print("PKG_ROOT:'{}'".format(pkg_root))
-    runClangBuild(pkg_name=pkg_name,clang_version=getInstalledClangVersion())
+        pkg_name = packages[pkg_path].name
+        build_space = ctx.build_space_abs + os.path.sep + pkg_name
+        pkg_root = ctx.source_space_abs + os.path.sep + pkg_path
+        print("PKG_ROOT:'{}'".format(pkg_root))
+        runClangBuild(pkg_name=pkg_name,clang_version=getInstalledClangVersion())
     return 0
 
 description = dict(

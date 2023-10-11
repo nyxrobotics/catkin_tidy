@@ -27,10 +27,12 @@ catkin clang_tidy <package_name>
   sudo apt install -y clang-format-13 clang-tidy-13
   ```
   - Ubuntu 20.04
+  - To build openmp with clang, both versions must be 14
   ```
-  sudo add-apt-repository 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal-13 main'
+  sudo add-apt-repository 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal-14 main'
   wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
-  sudo apt install -y clang-format-13 clang-tidy-13
+  sudo apt install -y clang-format-14 clang-tidy-14
+  sudo apt install libomp-14-dev
   ```
 - setup catkin_tidy
 ```
