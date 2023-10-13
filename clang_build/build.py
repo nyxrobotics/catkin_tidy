@@ -22,6 +22,7 @@ def runClangBuild(pkg_name, clang_version):
         cmd = ['catkin build']
     else:
         cmd = ['catkin build {}'.format(pkg_name)]
+    cmd += ['--force-cmake']
     cmd += ['-DCMAKE_EXPORT_COMPILE_COMMANDS=ON']
     cmd += ['-DCMAKE_C_COMPILER=/usr/bin/clang-{}'.format(clang_version)]
     cmd += ['-DCMAKE_CXX_COMPILER=/usr/bin/clang++-{}'.format(clang_version)]
