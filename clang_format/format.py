@@ -57,7 +57,7 @@ def getInstalledClangVersion():
 
 def findSrcFiles(path):
     p = pathlib.Path(path)
-    types = ('src/**/*.c', 'src/**/*.cpp')
+    types = ('src/**/*.c', 'src/**/*.cpp', 'src/**/*.cc')
     files_grabbed = []
     for files in types:
         files_grabbed.extend(p.glob(files))
@@ -65,7 +65,7 @@ def findSrcFiles(path):
 
 def findHeaderFiles(path):
     p = pathlib.Path(path)
-    types = ('include/**/*.h', 'include/**/*.hpp')
+    types = ('include/**/*.h', 'include/**/*.hpp', 'include/**/*.hh')
     files_grabbed = []
     for files in types:
         files_grabbed.extend(p.glob(files))
@@ -73,7 +73,7 @@ def findHeaderFiles(path):
 
 def findCodeFiles(path):
     p = pathlib.Path(path)
-    types = ('src/**/*.c', 'src/**/*.cpp', 'include/**/*.h', 'include/**/*.hpp')
+    types = ('src/**/*.c', 'src/**/*.cpp', 'src/**/*.cc', 'include/**/*.h', 'include/**/*.hpp', 'include/**/*.hh')
     files_grabbed = []
     for files in types:
         files_grabbed.extend(p.glob(files))
